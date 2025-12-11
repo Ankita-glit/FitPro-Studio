@@ -1,0 +1,74 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
+
+class ProfilenamepageController extends GetxController{
+
+  TextEditingController nameController = TextEditingController();
+  final Dio dio = Dio();
+  String userid = FirebaseAuth.instance.currentUser!.uid ?? '';
+  RxBool isLoading = false.obs;
+
+  void onInit(){
+    super.onInit();
+    loadSaveddata();
+  }
+
+  Future<void> loadSaveddata() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedName = prefs.getString('user_name');
+
+    if (storedName != null && storedName.isNotEmpty) {
+      nameController.text = storedName;
+    }
+  }
+
+  Future<void> UpdateName() async {
+    isLoading.value = true;
+    try {
+      dio.options = BaseOptions(
+        validateStatus: (status) {
+          return status! < 500;
+        },
+      );
+      final url = 'https://fitarcbe.boostproductivity.online/api/v1/user/$userid/';
+      print('Making PATCH request to: $url');
+
+      final data = {
+        "name": nameController.text,
+      };
+
+      final response = await dio.patch(url, data: data);
+
+      print('Response status: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        var responseData = response.data;
+
+        if (responseData is Map<String, dynamic>) {
+          isLoading.value=false;
+          Get.back();
+        } else {
+          isLoading.value=false;
+          Get.snackbar('Error', 'Invalid response format.',
+              backgroundColor: Color(0xff2F2F2F), colorText: Colors.white);
+        }
+      } else if (response.statusCode == 404) {
+        isLoading.value=false;
+        print('Status code 404 - User not found on the server');
+      } else {
+        isLoading.value=false;
+        Get.snackbar('Error',
+            'Unexpected error occurred. Status code: ${response.statusCode}',
+            backgroundColor: Color(0xff2F2F2F), colorText: Colors.white);
+      }
+    } catch (e) {
+      isLoading.value=false;
+      print('Error: $e');
+    }
+  }
+
+}
