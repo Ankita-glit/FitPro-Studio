@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "758469433467",
+    "project_id": "firarc",
+    "storage_bucket": "firarc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758469433467:android:037c092ee73616b3f12ade",
+        "android_client_info": {
+          "package_name": "com.workout.logger.fitarc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758469433467-73542c8pne4rb0b5ooh6vevh8qofgcbr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE8__UP6IhfdPGC_7zeAR5Ws-TkIpj9Yk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "758469433467-73542c8pne4rb0b5ooh6vevh8qofgcbr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "758469433467-gnn80uc2leq2c582i0sudanpl4e9smvl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.workout.logger.fitarc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
